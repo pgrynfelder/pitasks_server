@@ -1,0 +1,12 @@
+db.sqlite3
+__pycache__/
+*.py[cod]
+migrations/
+# PyCharm files
+.idea/
+# Dev helper functions
+.populate_db/
+# Config
+.env
+# VSCode files
+.vscode
