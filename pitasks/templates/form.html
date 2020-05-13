@@ -1,0 +1,32 @@
+{% load widget_tweaks %}
+
+{% for field in form %}
+    {% with field.label_tag|striptags|slice:":-1" as label_text %}
+        {% with "placeholder:"|add:label_text as placeholder_attr %}
+            {% if field.errors %}
+                <div class="form-group has-error">
+                    {{ field|attr:"class:form-control"|attr:placeholder_attr }}
+                    {% if field.help_text %}
+                        <p class="help-block"><small>{{ field.help_text }}</small></p>
+                    {% endif %}
+                    <span class="help-block">
+                        {% for error in  field.errors %}
+                            <div class="alert alert-warning" role="alert">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </span>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    {{ field|attr:"class:form-control"|attr:placeholder_attr }}
+                    {% if field.help_text %}
+                        <p class="help-block"><small>{{ field.help_text }}</small></p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    {% endwith %}
+{% endfor %}
+
+{#{{ form.as_p }}#}

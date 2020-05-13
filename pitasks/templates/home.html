@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if not user.is_authenticated %}
+        <div class="jumbotron">
+            <h1 class="display-4">Witaj w &pi; tasks</h1>
+            <p class="lead">Zaloguj się, aby zobaczyć swoje zadania.</p>
+        </div>
+    {% else %}
+        <div>
+            <h1 class="display-4">zadania
+                <button id="task-new" class="btn btn-outline-primary">
+                    <span class="material-icons">add</span></button>
+            </h1>
+            <ul class="list-group list-group-flush">
+                {% for task in todo %}
+                    {% include 'task.html' %}
+                {% endfor %}
+                {% for task in complete %}
+                    {% include 'task_complete.html' %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <script type="text/javascript">
+        $('#task-new').click(() =>
+            $.ajax({
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                url: '/api/tasks/',
+                type: 'POST',
+                data: {'title': ''},
+                success: function (result) {
+                    location.reload();
+                }
+            })
+        )
+    </script>
+{% endblock %}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>&pi; tasks</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar bg-light mb-5">
+    <div class="container">
+        <a class="navbar-brand mr-auto" href="{% url 'home' %}">&pi; tasks</a>
+        <div class="btn-group">
+            {% if not user.is_authenticated %}
+                <a class="btn btn-outline-primary" href="{% url 'login' %}">Login</a>
+                <a class="btn btn-primary" href="{% url 'register' %}">Rejestracja</a>
+            {% else %}
+                <a class="btn btn-outline-primary" role="button" href="{% url 'logout' %}">{{ user.username }} &ndash;
+                    Wyloguj się</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <main>
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
+<nav class="navbar mt-5">
+    <div class="container">
+        Copyright &copy; Piotr Grynfelder. Created with Bootstrap&reg;, Django&reg; and love <3
+    </div>
+</nav>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</body>
+</html>

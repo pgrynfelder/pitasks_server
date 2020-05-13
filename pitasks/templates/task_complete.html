@@ -1,0 +1,49 @@
+<li class="list-group-item" id="task-{{ task.id }}">
+    <div class="row">
+        <div class="col-sm-6">
+            <input disabled id="title-{{ task.id }}" type="text" class="form-control" value="{{ task.title }}">
+        </div>
+        <div class="col-sm-auto">
+            <button id="undo-{{ task.id }}" class="btn btn-outline-warning">
+                <span class="material-icons">undo</span>
+            </button>
+        </div>
+        <div class="col-sm-auto">
+            <button id="delete-{{ task.id }}" class="btn btn-outline-danger">
+                <span class="material-icons">delete</span>
+            </button>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $('#delete-{{ task.id }}').click(() => $.ajax({
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            url: '/api/tasks/{{ task.id }}/',
+            type: 'DELETE',
+            success: function (result) {
+                location.reload();
+            }
+        }));
+        $('#undo-{{ task.id }}').click(() => $.ajax({
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            url: '/api/tasks/{{ task.id }}/',
+            type: 'PUT',
+            data: {'complete': false},
+            success: function (result) {
+                location.reload();
+            }
+        }));
+        $('#title-{{ task.id }}').change(() =>
+            $.ajax({
+                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                    url: '/api/tasks/{{ task.id }}/',
+                    type: 'PATCH',
+                    data: {'title': $('#title-{{ task.id }}').val()},
+                    success: function (result) {
+                        console.log($('#title-{{ task.id }}').val())
+                    }
+                }
+            )
+        )
+    </script>
+</li>
