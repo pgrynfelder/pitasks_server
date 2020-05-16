@@ -53,7 +53,7 @@ def register_view(request):
         else:
             return render(request, 'register.html', context={'form': form})
 
-    form = UserCreationForm(request)
+    form = UserCreationForm()
     return render(request, 'register.html', context={'form': form})
 
 
